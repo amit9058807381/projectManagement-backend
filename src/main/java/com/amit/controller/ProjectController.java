@@ -112,6 +112,11 @@ public class ProjectController {
             @RequestHeader("Authorization") String jwt
 
             )throws Exception{
+
+        if(request.getEmail() == null || request.getProjectId() == null){
+            throw new RuntimeException("Invalid request");
+        }
+
         User user=userService.findUserProfileByJwt(jwt);
         invitationService.sendInvitation(request.getEmail(), request.getProjectId());
         MessageResponse messageResponse=new MessageResponse("invitation sent");
